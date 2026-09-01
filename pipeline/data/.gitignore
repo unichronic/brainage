@@ -1,0 +1,3 @@
+# Raw MRI, intermediate maps, feature archives, and generated stage manifests
+# belong on external storage and are created by `prepare`/`download`.
+exp2/

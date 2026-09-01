@@ -1,0 +1,30 @@
+{
+  "name": "exp2",
+  "status": "current_production",
+  "dataset_manifest": "pipeline/data/exp2_manifest.tsv",
+  "split_counts": {
+    "train": 2742,
+    "calibration": 554,
+    "test": 561
+  },
+  "preprocessing": {
+    "segmentation": "SPM12 Unified Segmentation",
+    "map": "modulated normalized grey matter (mwc1)",
+    "released_runtime": "SPM12 r7771 standalone MATLAB Runtime",
+    "reproduction_runtime": "SPM12 r7771 Octave-compatible Docker build",
+    "smooth_fwhm_mm": 4.0,
+    "resample_mm": 4.0,
+    "mask": "assets/brainmask_12.8.nii",
+    "mask_threshold": 0.5
+  },
+  "model": {
+    "feature_variant": "within_subject_z",
+    "pca_components": 128,
+    "gpr_kernel": "Matern(nu=1.5) + WhiteKernel",
+    "gpr_alpha": 0.0,
+    "gpr_restarts": 1,
+    "random_state": 20260806,
+    "age_expansion_factor": 1.01
+  },
+  "artifact": "models/exp2.joblib"
+}

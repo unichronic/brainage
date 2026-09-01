@@ -1,0 +1,62 @@
+{
+  "name": "exp2",
+  "status": "current_production",
+  "dataset": {
+    "manifest": "pipeline/data/exp2_manifest.tsv",
+    "rows": 3857,
+    "splits": {
+      "train": 2742,
+      "calibration": 554,
+      "test": 561
+    },
+    "source_ledger": "internal provenance ledger not included in compact public checkout",
+    "source_cohorts": [
+      "OpenBHB",
+      "DLBS",
+      "IXI",
+      "NKI-RS",
+      "SALD",
+      "OpenNeuro datasets"
+    ]
+  },
+  "paths": {
+    "working_data": "pipeline/data/exp2",
+    "stage_manifests": "pipeline/data/exp2/manifests",
+    "raw_t1": "pipeline/data/exp2/raw",
+    "gm_maps": "pipeline/data/exp2/gm_maps",
+    "csf_maps": "pipeline/data/exp2/csf_maps",
+    "features": "pipeline/data/exp2/results/gm_features.npz",
+    "predictions": "pipeline/data/exp2/results/predictions.tsv",
+    "bias_correction": "pipeline/data/exp2/results/age_bias_correction.json"
+  },
+  "preprocessing": {
+    "gm_map": "FastSPM SPM12 Unified Segmentation, modulated normalized GM (mwc1)",
+    "csf_map": "FastSPM SPM12 Unified Segmentation, modulated normalized CSF (mwc3)",
+    "recipe_gm": "matlab/fastspm_v1.m",
+    "recipe_csf": "csf_feasibility_test/fastspm_v1_gmcsf.m",
+    "released_runtime": "SPM12 r7771 standalone MATLAB Runtime",
+    "reproduction_runtime": "SPM12 r7771 Octave-compatible Docker build",
+    "feature_grid": "4 mm smoothing, 4 mm resampling, fixed brain mask, within-subject z normalization"
+  },
+  "model": {
+    "source_artifact": "models/exp2.joblib",
+    "packaged_artifact": "models/exp2.joblib",
+    "kernel": "matern_white",
+    "pca_components": 128,
+    "gpr_restarts": 1,
+    "random_state": 20260806,
+    "age_expansion_factor": 1.01,
+    "training_age_mean": 43.762219570745266
+  },
+  "split_policy": {
+    "train": "fit feature transforms and any retrained prediction head",
+    "calibration": "fit age-bias correction and choose development settings",
+    "test": "locked final evaluation only; never used for fitting or tuning"
+  },
+  "experiments": {
+    "bias_correction": "calibration-only affine correction applied after prediction",
+    "csf": "feature-age signal and optional calibration-only fusion; no promoted CSF head",
+    "cortical_thickness": "label-blind exploratory branch; no promoted prediction head",
+    "age_aware": "group-aware representation benchmark; separate from the production head"
+  }
+}
